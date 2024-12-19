@@ -1,0 +1,32 @@
+module main {
+
+var i , x, pc : integer;
+
+init { 
+     pc = 0;
+     }
+
+ next {
+
+if (pc == 0)
+{   x'=0;
+    i'=0;
+    pc' = 1;
+}
+
+else  {
+        if (i!=10)
+            {x' = x+2;
+            i' = i+1;
+            pc' = 1;}
+    }
+}
+invariant first : (pc==1 && i<=10) || (pc!=1);
+
+
+control
+{vobj = induction(4);
+ check;
+ vobj.print_cex(x,i,pc);
+ }
+}

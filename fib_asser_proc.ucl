@@ -1,0 +1,30 @@
+module main {
+    // System description.
+    var a, b : integer;
+
+    procedure set_init()
+    modifies a, b;
+    {
+        havoc a;
+        havoc b;
+        // embedded assumptions.
+        assume (a <= b);
+        assume (a >= 0 && b >= 0);
+    }
+
+    init {
+        call set_init();
+    }
+    
+    next {
+        a', b' = b, a + b;
+        }
+    
+   invariant get: a<=b; 
+    control {
+        vobj=induction(1);
+        check;
+        vobj.print_cex(a,b);
+    }
+}
+
