@@ -1,0 +1,21 @@
+module main {
+  var a, b : integer;
+  init {
+    a = 0;
+    b = 1;
+  }
+  next {
+    a', b' = b, a + b;
+  }
+
+  invariant a_le_b: a <= b;
+  invariant a_gt: a>=0;
+
+control {
+    vobj = induction(1);
+    check;
+    print_results;
+    vobj.print_cex(a,b);
+  }
+}
+   

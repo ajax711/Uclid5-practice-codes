@@ -1,0 +1,25 @@
+module main { 
+
+var a,b : integer ; 
+
+init {
+a = 0 ;
+b = 0 ;
+}
+
+next {
+b' = b+a;
+a' = a+1;
+}
+
+invariant b_gt : b>=0;
+#invariant a_gt : a>=0;
+
+control 
+{
+v = induction(4);
+check; 
+print_results;
+v.print_cex(a,b);
+}
+}

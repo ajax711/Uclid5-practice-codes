@@ -1,0 +1,41 @@
+module main{
+        var a,b,c,i,a1,b1,c1 : integer;
+ 
+        init{
+                a=0;
+                b=1;
+                c=2;
+                i=0;
+        }
+        procedure rotate(a:integer,b:integer,c:integer)
+        returns(aP:integer, bP:integer, cP:integer)
+        modifies a,b,c,a1,i,b1,c1;
+        {       
+                a1=a;
+                b1=b;
+                c1=c;
+                while(i<30000000){
+                        a1,b1,c1=b1,c1,a1;
+                        i = i+1; 
+                }
+                assert (a!=b && b!=c);
+                aP=a1;
+                bP=b1;
+                cP=c1;
+        }
+ 
+        next{
+                call (a',b',c')= rotate(a,b,c);
+       }
+ 
+        invariant great: a>=0 && b>=0 && c>=0;
+//       invariant same: a==0 && b==1 && c==2;
+         invariant uneq:  a!=b && b!=c;
+        control{
+//                 vobj = induction(1);
+                vobj = bmc(1000);
+                check;
+                print_results;
+//              vobj.print_cex(a,b,c);
+        }
+}
